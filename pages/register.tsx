@@ -50,7 +50,7 @@ const Register: FC<RegisterProps> = ({}) => {
 
       <form onSubmit={registerForm.handleSubmit}>
         <main className="flex flex-col justify-center items-center min-h-screen">
-          <div className="bg-white rounded-lg border-1 border-slate-100 p-6 w-full sm:w-96">
+          <div className="bg-white rounded-lg p-6 w-full sm:w-96">
             <h1 className="text-center">Register</h1>
 
             <Input

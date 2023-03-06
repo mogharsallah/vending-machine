@@ -19,7 +19,7 @@ export const SearchInput: FC<Props> = ({ className, error, hint, children, ...pr
       <MagnifyingGlassIcon />
       <input
         {...props}
-        className="appearance-none flex-1 focus:ring-0 focus:outline-none focus:appearance-none ml-2 bg-transparent text-slate-600 font-normal placeholder:text-slate-400"
+        className="appearance-none flex-1 focus:ring-0 focus:outline-none focus:appearance-none ml-2 bg-transparent font-normal placeholder:text-slate-400"
       />
     </div>
   )

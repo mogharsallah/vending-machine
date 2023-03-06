@@ -60,7 +60,7 @@ const Login: FC<LoginProps> = ({}) => {
       </Head>
       <form onSubmit={loginForm.handleSubmit}>
         <main className="flex flex-col justify-center items-center min-h-screen">
-          <div className="bg-white rounded-lg border-slate-100 p-6 w-full sm:w-96">
+          <div className="bg-white rounded-lg p-6 w-full sm:w-96">
             <h1 className="text-center">Sign-in</h1>
 
             <Input

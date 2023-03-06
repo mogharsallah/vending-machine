@@ -47,12 +47,12 @@ export const Header: FC<Props> = () => {
   }, [searchQuery])
 
   return (
-    <header className="w-full sticky h-14 flex justify-center items-center top-0 backdrop-blur-md bg-slate-900/80">
+    <header className="w-full sticky h-14 flex justify-center items-center top-0 backdrop-blur-md">
       <div className="container py-2 px-4 flex justify-between items-center">
         <form onSubmit={handleSearch}>
           <div className="flex items-center">
             <Link href="/">
-              <SnackIcon className="h-6 w-6 mr-4 text-white" />
+              <SnackIcon className="h-6 w-6 mr-4 " />
             </Link>
             <SearchInput
               value={search}
@@ -61,12 +61,12 @@ export const Header: FC<Props> = () => {
               className="w-96"
             />
             {user?.role === 'seller' && (
-              <Link className="text-sm text-white font-medium ml-4" href="/my-products">
+              <Link className="text-sm  font-medium ml-4" href="/my-products">
                 My Products
               </Link>
             )}
             {user?.role === 'buyer' && (
-              <Link className="flex items-center text-sm text-white font-medium ml-4" href="/deposit">
+              <Link className="flex items-center text-sm font-medium ml-4" href="/deposit">
                 <MoneyIcon className="mr-1" /> {formatCurrency(user?.deposit || 0)}
               </Link>
             )}
@@ -76,7 +76,7 @@ export const Header: FC<Props> = () => {
           <Link
             href="https://github.com/mogharsallah/vending-machine"
             target="_blank"
-            className="mr-4 appearance-none no-underline flex items-center text-sm text-white"
+            className="mr-4 appearance-none no-underline flex items-center text-sm "
           >
             Open source
             <GithubIcon className="ml-1" />
@@ -84,16 +84,13 @@ export const Header: FC<Props> = () => {
           <Link
             href="/api-doc"
             target="_blank"
-            className="mr-4 appearance-none no-underline flex items-center text-sm text-white"
+            className="mr-4 appearance-none no-underline flex items-center text-sm "
           >
             API
             <CodeIcon className="ml-1" />
           </Link>
-          <button
-            onClick={handleAuthClick}
-            className="appearance-none no-underline flex items-center text-sm text-white"
-          >
-            <span className="mr-1 font-normal">{user ? 'Sign out' : 'Sign in'}</span>
+          <button onClick={handleAuthClick} className="appearance-none no-underline flex items-center text-sm">
+            <span className="mr-1">{user ? 'Sign out' : 'Sign in'}</span>
             {user ? <LogoutIcon /> : <LoginIcon />}
           </button>
         </div>
