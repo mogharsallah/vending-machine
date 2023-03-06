@@ -12,7 +12,7 @@ export const SearchInput: FC<Props> = ({ className, error, hint, children, ...pr
   return (
     <div
       className={classNames(
-        'min-h-[36px] px-4 py-1 flex items-center rounded-lg bg-slate-100 border-1 border-slate-600 box-border',
+        'min-h-[36px] px-4 py-1 flex items-center rounded-lg bg-slate-100/50 border-1 border-slate-600 box-border',
         className
       )}
     >

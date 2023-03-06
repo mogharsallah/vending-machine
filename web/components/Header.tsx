@@ -47,7 +47,7 @@ export const Header: FC<Props> = () => {
   }, [searchQuery])
 
   return (
-    <header className="w-full sticky h-14 flex justify-center items-center top-0 backdrop-blur-md">
+    <header className="w-full sticky h-14 flex justify-center items-center top-0 backdrop-blur-md z-50">
       <div className="container py-2 px-4 flex justify-between items-center">
         <form onSubmit={handleSearch}>
           <div className="flex items-center">
