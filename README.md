@@ -84,11 +84,16 @@ Test logs are printed to a file named `test_logs.txt` in the root project direct
 
 ## API
 
-Check the open api spec file under [docs/openspec-api.json](./docs/openspec-api.json)
-Or test it on locally on: [http://localhost:3000/api-doc](http://localhost:3000/api-doc)
+Visit the open api spec file under [docs/openspec-api.json](./docs/openspec-api.json) for a detailed description.
+
+Test the API endpoints locally on: [http://localhost:3000/api-doc](http://localhost:3000/api-doc)
+Or test them on the dome website: [https://vending-machine-lyart.vercel.app/api-doc](https://vending-machine-lyart.vercel.app/api-doc)
+
+## Disclaimer:
+
+The server exposes an [endpoint](./pages/api/purge.ts) that purges the database.
 
 ## TODO:
 
 - Handle client side api calls errors. Currently only main flow errors are handled
-- Improve frontend UX
 - Improve tracing and logging
