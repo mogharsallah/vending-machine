@@ -11,6 +11,7 @@ import { LoginIcon } from './icons/LoginIcon'
 import { LogoutIcon } from './icons/LogoutIcon'
 import { MoneyIcon } from './icons/MoneyIcon'
 import { SnackIcon } from './icons/SnackIcon'
+import { GithubIcon } from './icons/GithubIcon'
 
 interface Props {}
 
@@ -72,6 +73,14 @@ export const Header: FC<Props> = () => {
           </div>
         </form>
         <div className="flex">
+          <Link
+            href="https://github.com/mogharsallah/vending-machine"
+            target="_blank"
+            className="mr-4 appearance-none no-underline flex items-center text-sm text-white"
+          >
+            Open source
+            <GithubIcon className="ml-1" />
+          </Link>
           <Link
             href="/api-doc"
             target="_blank"
