@@ -6,7 +6,7 @@ A _Seller_ can create products and manage
 A _Buyer_ can purchase products given a deposit in coins.
 A user can logout from all sessions
 
-Try out the demo on: [vending-machine-nleljclnr-medhoover](https://vending-machine-nleljclnr-medhoover.vercel.app/)
+Try out the demo on: [https://vending-machine-lyart.vercel.app/](https://vending-machine-lyart.vercel.app/)
 
 ## Technical choices:
 
