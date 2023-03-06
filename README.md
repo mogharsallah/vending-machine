@@ -2,8 +2,11 @@
 
 This repo contains my implementation of a code challenge requested by a client.
 The gist is implementing a vending machine api and frontend where a user can sign in as a "buyer" or a "seller".
-A _Seller_ can create products and manage
+
+A _Seller_ can create and manage their products
+
 A _Buyer_ can purchase products given a deposit in coins.
+
 A user can logout from all sessions
 
 Try out the demo on: [https://vending-machine-lyart.vercel.app/](https://vending-machine-lyart.vercel.app/)
