@@ -11,6 +11,7 @@ import { UserNotFoundError } from '../errors/UserNotFound'
 import { UsernameExistError } from '../errors/UsernameExist'
 import ProductService from './product'
 import SessionService from './session'
+import { ProductNotFound } from '../errors/ProductNotFound'
 
 export default class UserService {
   public static async create(username: string, password: string, role: UserRole) {
@@ -82,29 +83,42 @@ export default class UserService {
       throw new InvalidUserRoleError({ userId: userId, role: user.role })
     }
 
-    const product = await ProductService.get(productId)
+    /*
+      The purchase logic must be executed all-or-none and in-order and without parallel resource alterations
+      The purchase logic therefore is encapsulated in a single transaction to ensures these conditions
+    */
+    return await prisma.$transaction(async (ctx) => {
+      const product = await ctx.product.findUnique({ where: { id: productId } })
 
-    if (product.amountAvailable < amount) {
-      throw new ProductAmountNotAvailableError({ productId, amount })
-    }
+      if (!product) {
+        throw new ProductNotFound({ productId })
+      }
 
-    const price = product.cost * amount
-    if (price > (user.deposit || 0)) {
-      const neededDeposit = price - (user.deposit || 0)
-      throw new InsufficientDeposit({ deposit: user.deposit, product, amount, neededDeposit })
-    }
+      if (product.amountAvailable < amount) {
+        throw new ProductAmountNotAvailableError({ productId, amount })
+      }
 
-    const change = getCoinsBySum(user.deposit - price)
+      const price = product.cost * amount
+      if (price > (user.deposit || 0)) {
+        const neededDeposit = price - (user.deposit || 0)
+        throw new InsufficientDeposit({ deposit: user.deposit, product, amount, neededDeposit })
+      }
 
-    await UserService.update(userId, { deposit: 0 })
-    await ProductService.update(product.sellerId, productId, { amountAvailable: product.amountAvailable - amount })
+      const change = getCoinsBySum(user.deposit - price)
 
-    return {
-      total: user.deposit,
-      change: change,
-      product,
-      amount,
-    }
+      await ctx.user.update({ where: { id: userId }, data: { deposit: 0 } })
+      await ctx.product.update({
+        where: { id: productId },
+        data: { amountAvailable: product.amountAvailable - amount },
+      })
+
+      return {
+        total: user.deposit,
+        change: change,
+        product,
+        amount,
+      }
+    })
   }
 
   public static async update(id: string, data: Omit<Partial<User>, 'id'>) {
