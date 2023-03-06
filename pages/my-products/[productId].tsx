@@ -77,7 +77,7 @@ const Home: NextPageWithLayout<Props> = ({ product }) => {
       </Head>
 
       <BackLink href="/my-products">My products</BackLink>
-      <h2>Add product</h2>
+      <h2>{product ? 'Edit product' : 'Add product'}</h2>
       <div className="mt-4 max-w-sm">
         <form onSubmit={productForm.handleSubmit}>
           <Input
@@ -159,10 +159,8 @@ export const getServerSideProps = withSessionSsr(async function getServerSidePro
   try {
     const product = await ProductService.get(params.productId)
 
-    if (product.id !== req.session.user.id) {
-      return {
-        notFound: true,
-      }
+    if (product.sellerId !== req.session.user.id) {
+      throw new ProductNotFound()
     }
 
     return {
