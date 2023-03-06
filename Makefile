@@ -21,5 +21,4 @@ test-api:
 	make stop-test-database
 watch-test-api:
 	make start-test-database
-# If tests fail the database server will be stopped
 	npx jest --config $(jest-api-config-file) --runInBand --watch
