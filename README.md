@@ -17,6 +17,7 @@ Try out the demo on: [vending-machine-nleljclnr-medhoover](https://vending-machi
 - Authentication: Session based using [iron-session](https://github.com/vvo/iron-session), provides a simple yet secure authentication and authorization and invalidation. It also allows a seamless approach for authenticating API and web applications.
 - Logging: [winston](https://github.com/winstonjs/winston)
 - Test: [jest](https://jestjs.io/)
+- Images: product images generated via the [Midjourney AI](https://www.midjourney.com/). For now only 18 images were added. Find the images under: [public/product-images](./public/product-images/)
 
 ## Getting Started
 
