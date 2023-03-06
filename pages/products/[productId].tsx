@@ -60,6 +60,8 @@ const Home: NextPageWithLayout<Props> = ({ product }) => {
     }
   }, [buyForm, product.cost, user])
 
+  const submitDisabled = buyForm.values.amount === 0 && user?.deposit < buyForm.values.amount * product.cost
+
   return (
     <>
       <Head>
@@ -95,12 +97,7 @@ const Home: NextPageWithLayout<Props> = ({ product }) => {
                 onBlur={buyForm.handleBlur('amount')}
                 hint={buyForm.errors.amount}
               />
-              <Button
-                loading={buyForm.isSubmitting}
-                disabled={buyForm.values.amount === 0}
-                className="mt-4"
-                type="submit"
-              >
+              <Button loading={buyForm.isSubmitting} disabled={submitDisabled} className="mt-4" type="submit">
                 Buy
               </Button>
             </form>
