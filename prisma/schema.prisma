@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+
+model User {
+  id           String     @id @unique @default(cuid())
+  username     String     @unique
+  password     String
+  role         String
+  deposit      Int?
+  createdAt    DateTime   @default(now()) @map("created_at")
+  lastSignIn   DateTime   @default(now()) @map("last_sign_in")
+  products     Product[]
+  sessions     Session[]
+  @@map("users")
+}
+
+model Product {
+  id                  String @id @unique @default(cuid())
+  name                String
+  description         String? @default("")
+  imageId             Int? @default(1)
+  amountAvailable     Int @map("amount_available")
+  seller              User  @relation(fields: [sellerId], references: [id])
+  cost                Int
+  sellerId            String
+  @@index([sellerId])
+  @@map("products")
+  @@fulltext([description, name])
+  
+}
+
+model Session {
+  id                String   @id @unique @default(cuid())
+  createdAt         DateTime @default(now()) @map("created_at")
+  user              User    @relation(fields: [userId], references: [id])
+  userId            String
+  @@index([userId])
+  @@map("sessions")
+}

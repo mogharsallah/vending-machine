@@ -1,0 +1,452 @@
+{
+  "info": {
+    "contact": {},
+    "title": "Vending machine",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "description": "login",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "password": "12345678",
+                "username": "buyer_123"
+              },
+              "schema": {
+                "properties": {
+                  "password": {
+                    "example": "12345678",
+                    "type": "string"
+                  },
+                  "username": {
+                    "example": "buyer_123",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "login"
+      }
+    },
+    "/api/auth/logout": {
+      "get": {
+        "description": "logout",
+        "operationId": "logout",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "all",
+            "schema": {
+              "example": "true",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "logout"
+      }
+    },
+    "/api/auth/password": {
+      "post": {
+        "description": "change password",
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "newPassword": "123456789",
+                "password": "12345678"
+              },
+              "schema": {
+                "properties": {
+                  "newPassword": {
+                    "example": "123456789",
+                    "type": "string"
+                  },
+                  "password": {
+                    "example": "12345678",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "change password"
+      }
+    },
+    "/api/buy": {
+      "post": {
+        "description": "buy product (buyers only)",
+        "operationId": "buyProductBuyersOnly",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "amount": 1,
+                "productId": "cleqbkswd000376s8xgv0pcat"
+              },
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "example": 1,
+                    "type": "number"
+                  },
+                  "productId": {
+                    "example": "cleqbkswd000376s8xgv0pcat",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "buy product (buyers only)"
+      }
+    },
+    "/api/deposit": {
+      "post": {
+        "description": "deposit coins (buyers only)",
+        "operationId": "depositCoinsBuyersOnly",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "deposit": [100, 100, 100, 20, 20, 5]
+              },
+              "schema": {
+                "properties": {
+                  "deposit": {
+                    "example": [100, 100, 100, 20, 20, 5],
+                    "items": {
+                      "example": 100,
+                      "type": "number"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "deposit coins (buyers only)"
+      }
+    },
+    "/api/product": {
+      "get": {
+        "description": "search products",
+        "operationId": "searchProducts",
+        "parameters": [
+          {
+            "description": "filter products by searching name and/or descriptions",
+            "in": "query",
+            "name": "searchTerm",
+            "schema": {
+              "example": "coca",
+              "type": "string"
+            }
+          },
+          {
+            "description": "'desc' or 'asc'",
+            "in": "query",
+            "name": "sortDirection",
+            "schema": {
+              "example": "desc",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sellerId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "search products"
+      },
+      "post": {
+        "description": "create product (sellers only)",
+        "operationId": "createProductSellersOnly",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "amountAvailable": 400,
+                "cost": 250,
+                "description": "Life tastes good",
+                "imageId": 10,
+                "name": "Coca Cola"
+              },
+              "schema": {
+                "properties": {
+                  "amountAvailable": {
+                    "example": 400,
+                    "type": "number"
+                  },
+                  "cost": {
+                    "example": 250,
+                    "type": "number"
+                  },
+                  "description": {
+                    "example": "Life tastes good",
+                    "type": "string"
+                  },
+                  "imageId": {
+                    "example": 10,
+                    "type": "number"
+                  },
+                  "name": {
+                    "example": "Coca Cola",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "create product (sellers only)"
+      }
+    },
+    "/api/product/{deleteProductId}": {
+      "delete": {
+        "description": "delete product (sellers only)",
+        "operationId": "deleteProductSellersOnly",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "delete product (sellers only)"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "deleteProductId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/product/{patchProductId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "patchProductId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "description": "update product (sellers only)",
+        "operationId": "updateProductSellersOnly",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "description": "Not that much"
+              },
+              "schema": {
+                "properties": {
+                  "description": {
+                    "example": "Not that much",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "update product (sellers only)"
+      }
+    },
+    "/api/product/{productId}": {
+      "get": {
+        "description": "get product",
+        "operationId": "getProduct",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "get product"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "productId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/api/user": {
+      "patch": {
+        "description": "update user",
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "role": "buyer",
+                "username": "buyer-1234"
+              },
+              "schema": {
+                "properties": {
+                  "role": {
+                    "example": "buyer",
+                    "type": "string"
+                  },
+                  "username": {
+                    "example": "buyer-1234",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "update user"
+      },
+      "post": {
+        "description": "create user",
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "password": "12345678",
+                "role": "buyer",
+                "username": "buyer_123"
+              },
+              "schema": {
+                "properties": {
+                  "password": {
+                    "example": "12345678",
+                    "type": "string"
+                  },
+                  "role": {
+                    "example": "buyer",
+                    "type": "string"
+                  },
+                  "username": {
+                    "example": "buyer_123",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "create user"
+      }
+    },
+    "/api/user/": {
+      "delete": {
+        "description": "delete user",
+        "operationId": "deleteUser",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "delete user"
+      },
+      "get": {
+        "description": "get current user",
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "get current user"
+      }
+    }
+  },
+  "tags": []
+}

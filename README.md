@@ -1,38 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vending machine
+
+This repo contains my implementation of a code challenge requested by a client.
+The gist is implementing a vending machine api and frontend where a user can sign in as a "buyer" or a "seller".
+A _Seller_ can create products and manage
+A _Buyer_ can purchase products given a deposit in coins.
+A user can logout from all sessions
+
+## Technical choices:
+
+- Language: Javascript with Typescript (criteria)
+- Server: [Next.js](https://nextjs.org/) for it's simplicity in creating web apps and ease of deployment via Vercel
+- Frontend: [React](https://reactjs.org/) (criteria), [Tailwindcss](https://tailwindcss.com/) for rich css customization and class based integration
+- Database: mysql with [Prisma](https://www.prisma.io/) client provides a simple schema generation and migration with Typescript support
+- Authentication: Session based using [iron-session](https://github.com/vvo/iron-session), provides a simple yet secure authentication and authorization and invalidation. It also allows a seamless approach for authenticating API and web applications.
+- Logging: [winston](https://github.com/winstonjs/winston)
+- Test: [jest](https://jestjs.io/)
 
 ## Getting Started
 
-First, run the development server:
+First, create a `.env` file with the following variables:
+
+```sh
+DATABASE_URL='<mysql-db-url>?sslaccept=strict'
+SESSION_SECRET='<32-character-secret>'
+SALT_ROUNDS=10
+NEXT_PUBLIC_SESSION_NAME='<session-name>' # Example: 'vending-machine-session'
+NEXT_PUBLIC_LOGGIN_IN_COOCKIE_NAME='<coockie-name>' # Example: 'logged-id'
+
+```
+
+Install dependencies:
+
+```bash
+npm ci
+```
+
+Create the database schema:
+
+```bash
+npx prisma db push
+```
+
+For more details about using Prisma, visit: [Prisma documentation](https://www.prisma.io/docs)
+
+Start the server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Check the [API section](#api) for more details about accessing the api
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Testing
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The test setup is separated in-between api and frontend. Each environment runs in separate.
+Currently, only some api tests have been added. Adding Frontend tests require creating a dedicated jest config file. Check the [jest.api.config.ts](./jest.api.config.ts)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Api tests target a testing database running on a docker. The automation of the database is configured via [Makefile](./Makefile). After the test finishes, the database and docker container gets removed.
 
-## Learn More
+To run api tests, install [docker](https://www.docker.com/)
 
-To learn more about Next.js, take a look at the following resources:
+Run the api tests:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run test:api
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To run api tests in watch mode, run:
 
-## Deploy on Vercel
+```bash
+npm run test:api:watch
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Test logs are printed to a file named `test_logs.txt` in the root project directory
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## API
+
+Check the open api spec file under [docs/openspec-api.json](./docs/openspec-api.json)
+Or test it on locally on: [http://localhost:3000/api-doc](http://localhost:3000/api-doc)
+
+## TODO:
+
+- Handle client side api calls errors. Currently only main flow errors are handled
+- Improve frontend UX
+- Improve tracing and logging
