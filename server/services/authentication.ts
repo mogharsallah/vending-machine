@@ -43,6 +43,7 @@ export default class AuthenticationService {
       throw new InvalidCredentialsError({ username })
     }
 
+    const existingSessionCount = await SessionService.getUserSessionCount(user.id)
     const sessionModel = await SessionService.create(user.id)
 
     session.user = {
@@ -53,15 +54,20 @@ export default class AuthenticationService {
     }
     await session.save()
 
-    return session.user
+    return {
+      ...session.user,
+      message: existingSessionCount
+        ? 'There is already an active session using your account. Logout to terminate all sessions'
+        : undefined,
+    }
   }
 
   // If provided only the session associated to the sessionId will be removed, otherwise all user sessions will be removed
-  public static async logOut(userId: string, session: IronSession, sessionId?: string) {
-    if (sessionId) {
-      await SessionService.delete(sessionId)
-    } else {
+  public static async logOut(userId: string, session: IronSession, logoutFromAllSessions: boolean) {
+    if (logoutFromAllSessions) {
       await SessionService.deleteByUserId(userId)
+    } else {
+      await SessionService.delete(session.user.session)
     }
     session.destroy()
   }

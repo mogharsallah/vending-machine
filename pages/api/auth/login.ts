@@ -11,11 +11,11 @@ const handler = apiHandler()
 
 handler.post(
   withValidation({ schema: loginSchema, mode: 'body', type: 'Zod' })(),
-  async function (req: NextApiRequest, res: NextApiResponse<UserSession>) {
+  async function (req: NextApiRequest, res: NextApiResponse<UserSession & { message?: string }>) {
     const { session } = req
     const { username, password } = await req.body
-    const userSession = await AuthenticationService.logIn(username, password, session)
-    res.json(userSession)
+    const userSessionWithMessage = await AuthenticationService.logIn(username, password, session)
+    res.json(userSessionWithMessage)
   }
 )
 

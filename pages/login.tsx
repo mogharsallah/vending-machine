@@ -35,7 +35,12 @@ const Login: FC<LoginProps> = ({}) => {
         })
 
         if (response.ok) {
-          mutateUser(response.json(), false)
+          const result = await response.json()
+          const { message, userSession } = result
+          if (message) {
+            window.alert(message)
+          }
+          mutateUser(result, false)
         } else if (response.status === 404) {
           helpers.setFieldError('username', 'Username does not exist')
         } else if (response.status === 400) {

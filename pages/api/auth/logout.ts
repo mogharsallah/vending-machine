@@ -9,7 +9,8 @@ const handler = apiHandler()
 handler.get(async function (req: NextApiRequest, res: NextApiResponse<{ success: boolean }>) {
   const { session, query } = req
   const logOutFromAllSessions = query.all === 'true'
-  await AuthenticationService.logOut(session.user.id, session, logOutFromAllSessions ? undefined : session.user.session)
+
+  await AuthenticationService.logOut(session.user.id, session, logOutFromAllSessions)
 
   res.json({ success: true })
 })

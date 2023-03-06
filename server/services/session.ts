@@ -19,8 +19,13 @@ export default class SessionService {
     return newSession
   }
 
+  public static async getUserSessionCount(userId: string) {
+    const sessionCount = await prisma.session.count({ where: { userId } })
+    return sessionCount
+  }
+
   public static async deleteByUserId(userId: string) {
-    prisma.session.deleteMany({ where: { userId: userId } })
+    const result = await prisma.session.deleteMany({ where: { userId: userId } })
   }
 
   public static async delete(id: string) {
